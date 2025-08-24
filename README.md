@@ -34,7 +34,7 @@ npm install
 ```bash
 expo start
 ```
-Abrirá o Metro Bundler.
+Abrirá o Metro Bundler.<br>
 Você poderá abrir no aplicativo Expo Go utilizando QR Code disponibilizado no terminal.
 
 # 🟪 Estilos
@@ -53,7 +53,7 @@ text: black (#000000)<br>
 ### Dark Mode:
 Background: black (#000000)<br>
 text: white (#ffffff)<br>
-##Colors.ts
+##Colors.ts<br>
 Nesse arquivo são  definidos os estilos que serão reutilizados em diversas telas do app. Ex: cor background no modo dark.<br> 
 
 
