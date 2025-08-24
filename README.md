@@ -5,6 +5,7 @@
 
 Antes de iniciar, você precisa ter instalado:
 
+- **Aplicativo Expo Go no celular para testes**:
 - **Node.js** (recomendado v18 ou superior)  
 - **Yarn** ou **npm**  
 - **Expo CLI**:
