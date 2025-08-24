@@ -1,6 +1,7 @@
 # 🟪 Hysh
 # Projeto em React Native + Expo
 
+
 # ⚙️ Requisitos
 
 Antes de iniciar, você precisa ter instalado:
@@ -36,6 +37,15 @@ expo start
 ```
 Abrirá o Metro Bundler.<br>
 Você poderá abrir no aplicativo Expo Go utilizando QR Code disponibilizado no terminal.
+
+**Importante**
+- Sempre que abrir o projeto é importante fazer um git pull para garantir que está trabalhando na versão mais recente do projeto
+- Após o git pull, no terminal do projeto rode npm install para garantir que todas as dependências necessárias estão instaladas.
+```bash
+npm install
+```
+- Se realizar alterações, após se certificar de que está tudo ok, suba a versão atualizada para que o restante do time consiga acessar também
+  
 
 # 🟪 Estilos
 ## Cores:
