@@ -39,22 +39,22 @@ Você poderá abrir no aplicativo Expo Go utilizando QR Code disponibilizado no 
 
 # 🟪 Estilos
 ## Cores:
-Cor principal (Roxo):  #5C39BE
-Roxo 2:  #6F46E5
-Roxo 3:  #825AF7
-Cinza escuro:  #717171
-Cinza claro:  #A7A7A7
-Verde: #17FF82
+Cor principal (Roxo):  #5C39BE<br>
+Roxo 2:  #6F46E5<br>
+Roxo 3:  #825AF7<br>
+Cinza escuro:  #717171<br>
+Cinza claro:  #A7A7A7<br>
+Verde: #17FF82<br>
 
 ### Light Mode (Padrão):
-Background: white (#ffffff)
-text: black (#000000)
+Background: white (#ffffff)<br>
+text: black (#000000)<br>
 
 ### Dark Mode:
-Background: black (#000000)
-text: white (#ffffff)
+Background: black (#000000)<br>
+text: white (#ffffff)<br>
 ##Colors.ts
-Nesse arquivo são  definidos os estilos que serão reutilizados em diversas telas do app. Ex: cor background no modo dark. 
+Nesse arquivo são  definidos os estilos que serão reutilizados em diversas telas do app. Ex: cor background no modo dark.<br> 
 
 
 
