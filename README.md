@@ -13,24 +13,26 @@ Antes de iniciar, você precisa ter instalado:
 npm install -g expo-cli
 # ou
 yarn global add expo-cli
-
+```
 **Instalação do Projeto**
-
+```bash
 Clone o repositório:
 
 git clone git@github.com:projetohysh/hysh.git
 cd hysh
-
+```
 
 **Instale as dependências:**
-
+```bash
 yarn install
 # ou
 npm install
-
+```
 
 **Inicie o Expo:**
+```bash
 expo start
+```
 Abrirá o Metro Bundler.
 Você poderá abrir no aplicativo Expo Go utilizando QR Code disponibilizado no terminal.
 
