@@ -1,75 +1,40 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { SafeAreaView, Text, FlatList, View, Image, StyleSheet, Platform } from 'react-native';
+import { useFonts } from 'expo-font';
+import PostCard, { PostCardProps } from '@/components/PostCard';
+import Header from '@/components/Header';
 
 export default function HomeScreen() {
+  const [fontsLoaded] = useFonts({
+    'BukkariScript': require('@/assets/fonts/BukhariScript.ttf'),
+  });
+
+const feed: PostCardProps[] = [
+ { id: '1', postOwner: 'Allan Kennedy', content: 'Javascript é uma linguagem muito legal', profPic: 'https://pbs.twimg.com/profile_images/1951145033362468864/QZaHayVH_400x400.jpg', username: 'allan_kennedy', postTime: '2h' },
+  { id: '2', postOwner: 'Açucena Grande', content: 'to ouvindo taylor swift', profPic: 'https://pbs.twimg.com/profile_images/1904882959951208448/L2Pn91zU_400x400.jpg', username: 'acwcena', postTime: '1h' },
+  { id: '3', postOwner: 'Murilo Ribeiro', content: 'mas ele não entende... no tempo dele não havia paredão. casa de praia só quem tinha era barão :/', profPic: 'https://pbs.twimg.com/media/GS9kHJXXQAAanoY?format=jpg&name=large', username: 'muriloribs33', postTime: '30m' },
+  { id: '4', postOwner: 'Dani Psi', content: 'Eu sei o caminho pra minha casa, viu?', profPic: 'https://img.freepik.com/vetores-gratis/simbolo-de-psicologia-de-design-plano_23-2151089339.jpg', username: 'danipsico', postTime: '15m' },
+  { id: '5', postOwner: 'Patrick Shark', content: 'Vei, achei um microprocessador bem baratinho e bom.', profPic: 'https://pbs.twimg.com/profile_images/1585808015806046208/zE0y52Qu_400x400.jpg', username: 'patrick_shark', postTime: '5m' },
+  { id: '6', postOwner: 'GG Gatinho', content: 'vou orientar o tcc de ngm', profPic: require('@/assets/images/logo hysh.png'), username: 'gggatinho', postTime: '2m' },
+  { id: '7', postOwner: 'Jamilly', content: 'queria mt saber oq esse povo faz entre 11 da noite e 5 da manhã', profPic: require('@/assets/images/logo hysh.png'), username: 'jamilly_123', postTime: '1m' },
+  { id: '8', postOwner: 'Lucas Kevyn', content: 'vou passando pela prova dando glória a Deus.', profPic: 'https://avatars.githubusercontent.com/u/145145831?s=130&v=4', username: 'kevyndart', postTime: '30s' },
+  { id: '9', postOwner: 'Felipe Kenickie', content: 'queria trabalhar com php pro resto da vida, pense numa linguagem boa', profPic: 'https://avatars.githubusercontent.com/u/109770489?s=130&v=4', username: 'felpsants', postTime: '10s' },
+  { id: '10', postOwner: 'Coreano Safado', content: 'As vezes eu fico pensando e se Mas ai eu lembro que é todo mundo do mesmo grupo de amigos da faculdade e falo a probabilidade de dar merda é grande, mas a de da bom tbm é mt grande ai eu n sei oq fazer', profPic: 'https://pbs.twimg.com/profile_images/1910677195955027968/EPHL-Hy4_400x400.jpg', username: 'rico', postTime: '10s' },
+];
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+      
+      <Header />
+      <FlatList
+        data={feed}
+        renderItem={({ item }) => <PostCard {...item} />}
+        keyExtractor={(item) => item.id}
+        style={{ marginBottom: 30 }}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+  container: { flex: 1, padding: 16, backgroundColor: '#ede5f7', paddingTop: Platform.OS === 'android' ? 25 : 0, },
 });
