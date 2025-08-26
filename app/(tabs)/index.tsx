@@ -2,11 +2,10 @@ import { SafeAreaView, Text, FlatList, View, Image, StyleSheet, Platform } from 
 import { useFonts } from 'expo-font';
 import PostCard, { PostCardProps } from '@/components/PostCard';
 import Header from '@/components/Header';
+import NewPostButton from '@/components/NewPostButton';
 
 export default function HomeScreen() {
-  const [fontsLoaded] = useFonts({
-    'BukkariScript': require('@/assets/fonts/BukhariScript.ttf'),
-  });
+
 
 const feed: PostCardProps[] = [
  { id: '1', postOwner: 'Allan Kennedy', content: 'Javascript é uma linguagem muito legal', profPic: 'https://pbs.twimg.com/profile_images/1951145033362468864/QZaHayVH_400x400.jpg', username: 'allan_kennedy', postTime: '2h' },
@@ -31,6 +30,7 @@ const feed: PostCardProps[] = [
         keyExtractor={(item) => item.id}
         style={{ marginBottom: 30 }}
       />
+      <NewPostButton/>
     </SafeAreaView>
   );
 }

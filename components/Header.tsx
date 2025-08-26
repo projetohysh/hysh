@@ -2,6 +2,10 @@ import { SafeAreaView, Text, FlatList, View, Image, StyleSheet } from 'react-nat
 import { useFonts } from 'expo-font';
 
 export default function Header(){
+
+    const [fontsLoaded] = useFonts({
+    'BukkariScript': require('@/assets/fonts/BukhariScript.ttf'),
+  });
     return(
         <View style={styles.bg}>
                 <Text style={styles.header}>Hysh</Text>

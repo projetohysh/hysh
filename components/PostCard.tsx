@@ -20,7 +20,7 @@ export default function PostCard({ postOwner, content, profPic, username, postTi
       </View>
       <Text style={styles.content}>{content}</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10, gap: 20 }}>
-        <IconSymbol name="arrow.2.circlepath" size={24} color="#5C39BE" />        
+        <IconSymbol name="arrow.2.circlepath" size={24} color="#5C39BE"  />        
         <IconSymbol name="message" size={24} color="#5C39BE" />
         <IconSymbol name="star" size={24} color="#5C39BE" />
       </View>
@@ -32,5 +32,5 @@ const styles = StyleSheet.create({
   card: { padding: 20, backgroundColor: '#fdfdfd', borderRadius: 8, borderBottomWidth: 1, borderBottomColor: '#ccc' },
   postOwner: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
   content: { fontSize: 14, color: 'black', marginTop: 8 },
-  postDetails: { fontSize: 16, color: 'gray' },
+  postDetails: { fontSize: 16, color: 'gray', marginBottom: 4},
 });
