@@ -33,7 +33,7 @@ npm install
 
 **Inicie o Expo:**
 ```bash
-expo start
+npm run start
 ```
 Abrirá o Metro Bundler.<br>
 Você poderá abrir no aplicativo Expo Go utilizando QR Code disponibilizado no terminal.
