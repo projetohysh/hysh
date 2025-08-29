@@ -22,7 +22,7 @@ const feed: PostCardProps[] = [
   return (
     <SafeAreaView style={styles.container}>
       
-      <Header />
+      <Header headerTitle='Hysh'/>
       <FlatList
         data={feed}
         renderItem={({ item }) => <PostCard {...item} />}

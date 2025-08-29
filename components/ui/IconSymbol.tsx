@@ -22,7 +22,8 @@ const MAPPING = {
   'arrow.2.circlepath' : 'repeat',
   'person.3.fill': 'groups-2',
   'magnifyingglass' : 'search',
-  'plus.circle.fill' : 'add-circle'
+  'plus.circle.fill' : 'add-circle',
+  'bell' : 'notifications'
 } as IconMapping;
 
 /**
