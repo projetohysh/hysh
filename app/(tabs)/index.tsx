@@ -1,8 +1,7 @@
-import { SafeAreaView, Text, FlatList, View, Image, StyleSheet, Platform } from 'react-native';
-import { useFonts } from 'expo-font';
-import PostCard, { PostCardProps } from '@/components/PostCard';
 import Header from '@/components/Header';
 import NewPostButton from '@/components/NewPostButton';
+import PostCard, { PostCardProps } from '@/components/PostCard';
+import { FlatList, Platform, SafeAreaView, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
 
@@ -36,5 +35,5 @@ const feed: PostCardProps[] = [
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#ede5f7', paddingTop: Platform.OS === 'android' ? 25 : 0, },
+  container: { flex: 1, padding:Platform.OS === 'android' ? 0 : 16, backgroundColor: '#ede5f7', paddingTop: Platform.OS === 'android' ? 25 : 0, },
 });

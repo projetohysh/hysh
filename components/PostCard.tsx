@@ -1,5 +1,5 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 export interface PostCardProps {
   id: string;

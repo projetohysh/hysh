@@ -1,5 +1,5 @@
-import {View, StyleSheet} from 'react-native';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { Platform, StyleSheet, View } from 'react-native';
 
 export default function NewPostButton(){
     return(
@@ -14,9 +14,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 100,
         right: 30,
-        width: 40,
-        height: 40,
-        backgroundColor: 'white',
+        width: Platform.OS === 'android' ? 60 : 40,
+        height: Platform.OS === 'android' ? 60 : 40,
+        backgroundColor: Platform.OS === 'android'? 'rgba(102, 17, 102, 0)' : 'white',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000',
@@ -25,5 +25,6 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 5,
         opacity: 0.9,
+        borderRadius : 50
     },
 });
