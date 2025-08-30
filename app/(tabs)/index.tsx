@@ -1,10 +1,17 @@
 import Header from '@/components/Header';
 import NewPostButton from '@/components/NewPostButton';
 import PostCard, { PostCardProps } from '@/components/PostCard';
-import { FlatList, Platform, SafeAreaView, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Platform, RefreshControl, SafeAreaView, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
 
+const [refreshing, setRefreshing] = useState(false);
+
+const onRefresh = () => {
+  setRefreshing(true);
+  setTimeout(() => setRefreshing(false), 2000); // Simula loading
+};
 
 const feed: PostCardProps[] = [
  { id: '1', postOwner: 'Allan Kennedy', content: 'Javascript é uma linguagem muito legal', profPic: 'https://pbs.twimg.com/profile_images/1951145033362468864/QZaHayVH_400x400.jpg', username: 'allan_kennedy', postTime: '2h' },
@@ -24,6 +31,14 @@ const feed: PostCardProps[] = [
       
       <Header headerTitle='Hysh'/>
       <FlatList
+ refreshControl={
+    <RefreshControl
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      colors={['#5C39BE']}
+      tintColor='#5C39BE'
+    />
+  }     
         data={feed}
         renderItem={({ item }) => <PostCard {...item} />}
         keyExtractor={(item) => item.id}

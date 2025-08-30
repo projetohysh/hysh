@@ -15,7 +15,7 @@ export default function PostCard({ postOwner, content, profPic, username, postTi
   return (
     <View style={styles.card}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <Image source={typeof profPic === 'string' ? { uri: profPic } : profPic} style={{ width: 50, height: 50, borderRadius: 25 }} />
+        <Image source={typeof profPic === 'string' ? { uri: profPic } : profPic} style={{ width: 50, height: 50, borderRadius: 25, right: 10 }} />
         <Text style={styles.postOwner}>{postOwner}</Text>
         <Text style={styles.postDetails}>{username} • {postTime}</Text>
       </View>
@@ -32,7 +32,7 @@ export default function PostCard({ postOwner, content, profPic, username, postTi
 
 const styles = StyleSheet.create({
   card: { padding: 20, backgroundColor: '#fdfdfd', borderRadius: 8, borderBottomWidth: 1, borderBottomColor: '#ccc' },
-  postOwner: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
-  content: { fontSize: 14, color: 'black', marginTop: 8, marginHorizontal: 20 },
-  postDetails: { fontSize: 16, color: 'gray', marginBottom: 4},
+  postOwner: { fontSize: 16, fontWeight: 'bold', marginBottom: 25, right: 10 },
+  content: { fontSize: 16, color: 'black', marginTop: 0, marginHorizontal: 5 },
+  postDetails: { fontSize: 16, color: 'gray', marginBottom: 25, right: 10},
 });

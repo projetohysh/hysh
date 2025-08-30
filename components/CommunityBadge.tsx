@@ -12,17 +12,17 @@ export default function CommunityBadge(){
 
 const styles = StyleSheet.create({
     badge: {
-      backgroundColor: '#cbcbcbff',
+      backgroundColor: '#cbcbcb67',
       display: 'flex',
       flexDirection: 'row',
-      paddingHorizontal: 5,
+      paddingHorizontal: 8,
       gap: 10,
       alignItems: 'center',
       borderRadius: 8,
       opacity: 0.4,
-      left: 60,
-      bottom: 12,
-      maxWidth:  100
+      left: 50,
+      bottom: 25,
+      maxWidth:  110,
 
 
 
