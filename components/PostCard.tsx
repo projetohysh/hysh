@@ -33,6 +33,6 @@ export default function PostCard({ postOwner, content, profPic, username, postTi
 const styles = StyleSheet.create({
   card: { padding: 20, backgroundColor: '#fdfdfd', borderRadius: 8, borderBottomWidth: 1, borderBottomColor: '#ccc' },
   postOwner: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
-  content: { fontSize: 14, color: 'black', marginTop: 8, left: 60, marginRight:50 },
+  content: { fontSize: 14, color: 'black', marginTop: 8, marginHorizontal: 20 },
   postDetails: { fontSize: 16, color: 'gray', marginBottom: 4},
 });
