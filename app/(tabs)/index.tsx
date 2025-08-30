@@ -27,7 +27,7 @@ const feed: PostCardProps[] = [
         data={feed}
         renderItem={({ item }) => <PostCard {...item} />}
         keyExtractor={(item) => item.id}
-        style={{ marginBottom: 30 }}
+        style={{ marginBottom: Platform.OS === 'ios' ? 30 : 0 }}
       />
       <NewPostButton/>
     </SafeAreaView>

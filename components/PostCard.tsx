@@ -1,5 +1,6 @@
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import CommunityBadge from './CommunityBadge';
 
 export interface PostCardProps {
   id: string;
@@ -18,6 +19,7 @@ export default function PostCard({ postOwner, content, profPic, username, postTi
         <Text style={styles.postOwner}>{postOwner}</Text>
         <Text style={styles.postDetails}>{username} • {postTime}</Text>
       </View>
+      <CommunityBadge/>
       <Text style={styles.content}>{content}</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10, gap: 20 }}>
         <IconSymbol name="arrow.2.circlepath" size={24} color="#5C39BE"  />        
@@ -31,6 +33,6 @@ export default function PostCard({ postOwner, content, profPic, username, postTi
 const styles = StyleSheet.create({
   card: { padding: 20, backgroundColor: '#fdfdfd', borderRadius: 8, borderBottomWidth: 1, borderBottomColor: '#ccc' },
   postOwner: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
-  content: { fontSize: 14, color: 'black', marginTop: 8 },
+  content: { fontSize: 14, color: 'black', marginTop: 8, left: 60, marginRight:50 },
   postDetails: { fontSize: 16, color: 'gray', marginBottom: 4},
 });

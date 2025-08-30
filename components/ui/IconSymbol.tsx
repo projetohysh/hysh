@@ -23,7 +23,8 @@ const MAPPING = {
   'person.3.fill': 'groups-2',
   'magnifyingglass' : 'search',
   'plus.circle.fill' : 'add-circle',
-  'bell' : 'notifications'
+  'bell' : 'notifications',
+  'person.3' : 'groups-2'
 } as IconMapping;
 
 /**
