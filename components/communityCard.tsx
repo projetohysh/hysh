@@ -2,6 +2,10 @@ import { ImageBackground } from "expo-image";
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
+
+// As comunidades  são estáticas para fins de demonstração.
+//No aplicativo final essas serão dinaâmicas, a partir do nosso backend.
+
 export default function CommunityCard() {
 
     return(
