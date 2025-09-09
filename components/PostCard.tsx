@@ -1,4 +1,4 @@
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { FontAwesome6 } from '@expo/vector-icons';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import CommunityBadge from './CommunityBadge';
 
@@ -14,6 +14,7 @@ export interface PostCardProps {
 export default function PostCard({ postOwner, content, profPic, username, postTime }: PostCardProps) {
   return (
     <View style={styles.card}>
+       <FontAwesome6 name="ellipsis" size={20} color="gray" style={{alignSelf: 'flex-end'}}/>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
         <Image source={typeof profPic === 'string' ? { uri: profPic } : profPic} style={{ width: 50, height: 50, borderRadius: 25, right: 10 }} />
         <Text style={styles.postOwner}>{postOwner}</Text>
@@ -22,10 +23,11 @@ export default function PostCard({ postOwner, content, profPic, username, postTi
       <CommunityBadge/>
       <Text style={styles.content}>{content}</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10, gap: 20 }}>
-        <IconSymbol name="arrow.2.circlepath" size={24} color="#5C39BE"  />        
-        <IconSymbol name="message" size={24} color="#5C39BE" />
-        <IconSymbol name="star" size={24} color="#5C39BE" />
+        <FontAwesome6 name="repeat" size={20} color="#5C39BE" iconStyle='solid'/>
+        <FontAwesome6 name="message" size={20} color="#5C39BE" />
+        <FontAwesome6 name="star" size={20} color="#5C39BE" />
       </View>
+      
     </View>
   );
 }

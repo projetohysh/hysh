@@ -1,5 +1,5 @@
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import {FontAwesome6} from '@expo/vector-icons';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { Tabs } from 'expo-router';
@@ -28,28 +28,28 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Inicio',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome6 size={24} name="house" color={color} solid/>,
         }}
       />
       <Tabs.Screen
         name="Comunidades"
         options={{
           title: 'Comunidades',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.3.fill" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome6 size={24} name="users" color={color} solid/>,
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
           title: 'Explorar',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome6 size={24} name="magnifying-glass" color={color}/>,
         }}
       />
 <Tabs.Screen
         name="notificacoes"
         options={{
           title: 'Notificações',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="bell" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome6 size={24} name="bell" color={color} solid/>,
         }}
       />
     </Tabs>
