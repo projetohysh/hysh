@@ -4,9 +4,10 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import 'react-native-reanimated';
+
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,7 +20,7 @@ export default function RootLayout() {
     BukkariScript: require('@/assets/fonts/BukhariScript.ttf'),
 
   });
-
+ const [loggedIn, setLoggedIn] = useState(true);
   const onLayoutRootView = useCallback (async () => {
     
     if(fontsLoaded || fontError) {
@@ -37,9 +38,19 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+  {!loggedIn ? (
+    <Stack.Screen
+      name="Login" // precisa ser igual ao arquivo app/Login.tsx
+      options={{ headerShown: false }}
+    />
+  ) : (
+    <Stack.Screen
+      name="(tabs)"
+      options={{ headerShown: false }}
+    />
+  )}
+  <Stack.Screen name="+not-found" />
+</Stack>
       </View>
       <StatusBar style="auto" />
     </ThemeProvider>
