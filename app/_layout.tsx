@@ -40,7 +40,7 @@ export default function RootLayout() {
       <Stack>
   {!loggedIn ? (
     <Stack.Screen
-      name="Login" // precisa ser igual ao arquivo app/Login.tsx
+      name="Login"
       options={{ headerShown: false }}
     />
   ) : (
