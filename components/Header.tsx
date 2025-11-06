@@ -1,5 +1,7 @@
 import { useFonts } from 'expo-font';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import LogoutButton from './LogoutButton';
+
 
 export default function Header({headerTitle, font}: {headerTitle: string; font?: string}) {
 
@@ -12,6 +14,7 @@ export default function Header({headerTitle, font}: {headerTitle: string; font?:
     return(
         <View style={styles.bg}>
                 <Text style={[styles.header, font ? {fontFamily: font}: null]}>{headerTitle}</Text>
+                <LogoutButton />
                 <Image
                   source={{ uri: 'https://pbs.twimg.com/profile_images/1951145033362468864/QZaHayVH_400x400.jpg' }}
                   style={{ width: 40, height: 40, borderRadius: 100 }}
