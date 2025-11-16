@@ -1,14 +1,14 @@
 import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import {
-    ActivityIndicator,
-    Alert,
-    AppState,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  AppState,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import { supabase } from '../lib/supabase'
 
@@ -27,34 +27,54 @@ export default function Auth() {
 
   const router = useRouter()
 
-
-
+  // 🔥 Função de login adicionada
   async function signInWithEmail() {
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-     setLoading(false)
 
-    if (error) {
-      Alert.alert('Erro', error.message)
-    } else {
-      router.replace('/(tabs)') 
-    }
-  }
-  
-
-  async function signUpWithEmail() {
-    setLoading(true)
-    const { data: { session }, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
-    if (error) Alert.alert('Erro', error.message)
-    if (!session) Alert.alert('Verifique seu e-mail para confirmar o cadastro!')
+
     setLoading(false)
+
+    if (error) {
+      Alert.alert("Erro ao entrar", error.message)
+    } else {
+      router.replace('/(tabs)')
+    }
+  }
+
+  // Já existia
+  async function signUpWithEmail() {
+    setLoading(true)
+
+    const { data: { session }, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          nome: email.split("@")[0],
+          foto_url: null
+        }
+      }
+    })
+
+    setLoading(false)
+
+    if (error) {
+      Alert.alert('Erro', error.message)
+      return
+    }
+
+    if (!session) {
+      Alert.alert('Verifique seu e-mail para confirmar o cadastro!')
+    }
   }
 
   return (
     <View style={styles.container}>
+      <Text style={{fontSize: 50, fontWeight: 'bold', color: '#5C39BE', fontFamily: 'BukkariScript',marginBottom:60, lineHeight: 100, alignSelf: 'center' }}>Hysh</Text>
       <Text style={styles.label}>Email</Text>
       <TextInput
         style={styles.input}
@@ -100,12 +120,10 @@ export default function Auth() {
   )
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
     marginTop: 60,
-    padding: 20,
+    padding: 20
   },
   label: {
     fontSize: 16,
@@ -121,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#2E86DE',
+    backgroundColor: '#5C39BE',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -135,10 +153,10 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#2E86DE',
+    borderColor: '#5C39BE',
   },
   buttonOutlineText: {
-    color: '#2E86DE',
+    color: '#5C39BE',
   },
   buttonDisabled: {
     opacity: 0.7,

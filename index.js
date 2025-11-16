@@ -1,42 +1,27 @@
-import express from "express";
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
+import express from "express";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-// Conexão com Supabase
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+// Usando ANON KEY
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
 // Rota teste
 app.get("/", (req, res) => {
   res.send("API Hysh rodando 🚀");
 });
 
-// ---- ROTAS ---- //
-
-// Criar usuário
-app.post("/usuarios", async (req, res) => {
-  const { nome, email, senha_hash, biografia, foto_url } = req.body;
-
-  const { data, error } = await supabase
-    .from("usuarios")
-    .insert([
-      {
-        usuario_nome: nome,
-        usuario_email: email,
-        usuario_senha_hash: senha_hash,
-        usuario_biografia: biografia,
-        usuario_foto_url: foto_url,
-      },
-    ])
-    .select();
-
-  if (error) return res.status(400).json({ error: error.message });
-  res.json(data);
-});
+/* -----------------------------------
+   REMOVIDO: CRIAR USUÁRIO VIA BACKEND
+   AGORA SIGNUP É FEITO NO FRONT
+----------------------------------- */
 
 // Criar comunidade
 app.post("/comunidades", async (req, res) => {
@@ -53,7 +38,10 @@ app.post("/comunidades", async (req, res) => {
     ])
     .select();
 
-  if (error) return res.status(400).json({ error: error.message });
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
   res.json(data);
 });
 
@@ -72,7 +60,10 @@ app.post("/postagens", async (req, res) => {
     ])
     .select();
 
-  if (error) return res.status(400).json({ error: error.message });
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
   res.json(data);
 });
 

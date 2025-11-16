@@ -9,18 +9,40 @@ export interface PostCardProps {
   profPic: any;
   username: string;
   postTime: string;
+  comunidade: string;
 }
 
-export default function PostCard({ postOwner, content, profPic, username, postTime }: PostCardProps) {
+export default function PostCard({ postOwner, content, profPic, username, postTime, comunidade }: PostCardProps) {
+
+
+function getTime(timestamp: string) {
+  const postDate = new Date(timestamp);
+  const now = new Date();
+
+  const isToday =
+    postDate.getDate() === now.getDate() &&
+    postDate.getMonth() === now.getMonth() &&
+    postDate.getFullYear() === now.getFullYear();
+
+  if (isToday) {
+    // Mostra só a hora: HH:MM
+    return postDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  } else {
+    // Mostra só a data: DD/MM/YYYY
+    return postDate.toLocaleDateString();
+  }
+}
+
+
   return (
     <View style={styles.card}>
        <FontAwesome6 name="ellipsis" size={20} color="gray" style={{alignSelf: 'flex-end'}}/>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
         <Image source={typeof profPic === 'string' ? { uri: profPic } : profPic} style={{ width: 50, height: 50, borderRadius: 25, right: 10 }} />
         <Text style={styles.postOwner}>{postOwner}</Text>
-        <Text style={styles.postDetails}>{username} • {postTime}</Text>
+        <Text style={styles.postDetails}>{username} • {getTime(postTime)}</Text>
       </View>
-      <CommunityBadge/>
+      <CommunityBadge comunidade={comunidade}/>
       <Text style={styles.content}>{content}</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10, gap: 20 }}>
         <FontAwesome6 name="repeat" size={20} color="#5C39BE" iconStyle='solid'/>
@@ -33,7 +55,7 @@ export default function PostCard({ postOwner, content, profPic, username, postTi
 }
 
 const styles = StyleSheet.create({
-  card: { padding: 20, backgroundColor: '#fdfdfd', borderRadius: 8, borderBottomWidth: 1, borderBottomColor: '#ccc' },
+  card: { padding: 20, backgroundColor: '#fdfdfd', borderRadius: 8, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom:8},
   postOwner: { fontSize: 16, fontWeight: 'bold', marginBottom: 25, right: 10 },
   content: { fontSize: 16, color: 'black', marginTop: 0, marginHorizontal: 5 },
   postDetails: { fontSize: 16, color: 'gray', marginBottom: 25, right: 10},
