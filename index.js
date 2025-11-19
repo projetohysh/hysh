@@ -18,10 +18,6 @@ app.get("/", (req, res) => {
   res.send("API Hysh rodando 🚀");
 });
 
-/* -----------------------------------
-   REMOVIDO: CRIAR USUÁRIO VIA BACKEND
-   AGORA SIGNUP É FEITO NO FRONT
------------------------------------ */
 
 // Criar comunidade
 app.post("/comunidades", async (req, res) => {

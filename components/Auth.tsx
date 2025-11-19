@@ -27,7 +27,6 @@ export default function Auth() {
 
   const router = useRouter()
 
-  // 🔥 Função de login adicionada
   async function signInWithEmail() {
     setLoading(true)
 
@@ -39,13 +38,12 @@ export default function Auth() {
     setLoading(false)
 
     if (error) {
-      Alert.alert("Erro ao entrar", error.message)
+      Alert.alert("Email ou senha incorretos!", "Por favor, verifique novamente suas credenciais.")
     } else {
       router.replace('/(tabs)')
     }
   }
 
-  // Já existia
   async function signUpWithEmail() {
     setLoading(true)
 
@@ -78,7 +76,7 @@ export default function Auth() {
       <Text style={styles.label}>Email</Text>
       <TextInput
         style={styles.input}
-        placeholder="email@address.com"
+        placeholder="exemplo@hysh.com"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
