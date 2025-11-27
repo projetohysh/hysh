@@ -10,12 +10,11 @@ import {
   Image,
   Platform,
   RefreshControl,
-  SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
-  View,
+  View
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 
@@ -147,63 +146,73 @@ setPosts(normalizedPosts);    }
     );
   }
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Header headerTitle={community.comunidade_nome} font="Poppins" />
+ return (
+  <SafeAreaView style={styles.container}>
+    <Header headerTitle={community.comunidade_nome} font="Poppins" />
 
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
-        {/* Foto da comunidade */}
-        {community.comunidade_foto_url && (
-          <Image
-            source={{ uri: community.comunidade_foto_url }}
-            style={styles.communityImage}
+    <FlatList
+      data={posts}
+      keyExtractor={(item) => item.postagem_id.toString()}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={['#5C39BE']}
+          tintColor="#5C39BE"
+        />
+      }
+      ListHeaderComponent={
+        <View style={{ padding: 20 }}>
+          
+          {/* Foto da comunidade */}
+          {community.comunidade_foto_url && (
+            <Image
+              source={{ uri: community.comunidade_foto_url }}
+              style={styles.communityImage}
+            />
+          )}
+
+          {/* Nome e descrição */}
+          <Text style={styles.communityName}>{community.comunidade_nome}</Text>
+
+          {community.comunidade_descricao && (
+            <Text style={styles.communityDescription}>
+              {community.comunidade_descricao}
+            </Text>
+          )}
+
+          {/* Criar novo post */}
+          <NewPost
+            comunidadeId={community.id}
+            onPostCreated={() => loadCommunity()}
           />
-        )}
 
-        {/* Nome e descrição */}
-        <Text style={styles.communityName}>{community.comunidade_nome}</Text>
-        {community.comunidade_descricao && (
-          <Text style={styles.communityDescription}>{community.comunidade_descricao}</Text>
-        )}
-        <NewPost
-    comunidadeId={community.id}
-    onPostCreated={() => loadCommunity()} // recarrega posts
-  />
+          <Text style={styles.sectionTitle}>Postagens</Text>
 
-        {/* Posts */}
-        <Text style={styles.sectionTitle}>Postagens</Text>
-        {posts.length === 0 ? (
-  <Text style={{ textAlign: "center", color: "#717171", marginTop: 10 }}>
-    Nenhuma postagem ainda.
-  </Text>
-) : (
-  <FlatList
-  data={posts}
-  keyExtractor={(item) => item.postagem_id.toString()}
-  refreshControl={
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#5C39BE']} tintColor="#5C39BE" />
-  }
-  renderItem={({ item }) => (
-    <PostCard
-  
-  id={item.postagem_id.toString()}
-  postOwner={item.usuarios?.usuario_nome || "Usuário"}
-  profPic={item.usuarios?.usuario_foto_url || null}
-  content={item.postagem_conteudo}
-  username="@usuario"
-  postTime={item.postagem_criado_em}
-  comunidade={community.comunidade_nome}
-/>
-
-  )}
-  ListFooterComponent={<View />}
-/>
-
-)}
-
-      </ScrollView>
-    </SafeAreaView>
-  );
+          {posts.length === 0 && (
+            <Text style={{ textAlign: "center", color: "#717171", marginTop: 10 }}>
+              Nenhuma postagem ainda.
+            </Text>
+          )}
+        </View>
+      }
+      renderItem={({ item }) => (
+        <PostCard
+        userId={item.usuario_id}
+          id={item.postagem_id.toString()}
+          postOwner={item.usuarios?.usuario_nome || "Usuário"}
+          profPic={item.usuarios?.usuario_foto_url || null}
+          content={item.postagem_conteudo}
+          username="@usuario"
+          postTime={item.postagem_criado_em}
+          comunidade={community.comunidade_nome}
+        />
+      )}
+      ListFooterComponent={<View style={{ height: 30 }} />}
+      contentContainerStyle={{ paddingBottom: 40 }}
+    />
+  </SafeAreaView>
+);
 }
 
 const styles = StyleSheet.create({

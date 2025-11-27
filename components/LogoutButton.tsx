@@ -19,13 +19,16 @@ export default function LogoutButton() {
     <TouchableOpacity
       onPress={handleLogout}
       style={{
-        backgroundColor: '#E74C3C',
-        padding: 12,
+        backgroundColor: '#fc000088',
+        padding: 6,
         borderRadius: 8,
         alignItems: 'center',
+        width: 100,
+        alignSelf: "center",
+        marginVertical:10
       }}
     >
-      <Text style={{ color: '#fff', fontWeight: 'bold' }}>Sair</Text>
+      <Text style={{ color: 'white' }}>Sair</Text>
     </TouchableOpacity>
   );
 }

@@ -19,10 +19,10 @@ export const Colors = {
   dark: {
     primary: '#0a7ea4',
     text: '#ECEDEE',
-    background: '#000000ff',
-    tint: tintColorDark,
+    background: '#fff',
+    tint: tintColorLight,
     icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    tabIconDefault: '#687076',
+    tabIconSelected: tintColorLight,
   },
 };
