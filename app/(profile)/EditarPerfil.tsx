@@ -10,8 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
-  View,
+  TouchableOpacity
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -100,13 +99,16 @@ const uploadProfileImage = async (uri: string) => {
       .eq('id', userId);
 
     if (updateError) throw updateError;
+const timestamp = new Date().getTime();
+const publicUrlWithCacheBuster = `${publicUrl}?t=${timestamp}`;
+setUsuarioFotoUrl(publicUrlWithCacheBuster);
 
-    setUsuarioFotoUrl(publicUrl);
     Alert.alert('Sucesso', 'Foto atualizada!');
   } catch (err) {
     console.error('Erro ao enviar imagem:', err);
     Alert.alert('Erro', 'Não foi possível enviar a imagem');
   }
+  
 };
 
 
@@ -136,14 +138,15 @@ const uploadProfileImage = async (uri: string) => {
 
   if (loading) {
     return (
-      <View style={styles.center}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f0ff', justifyContent: 'center', alignItems: 'center' }}>
         <Text>Carregando...</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}
+  style={{ backgroundColor: '#f5f0ff' }} >
       <SafeAreaView>
         <TouchableOpacity onPress={pickImage} style={styles.avatarContainer}>
           <Image

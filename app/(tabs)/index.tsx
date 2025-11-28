@@ -48,7 +48,6 @@ const [posts, setPosts] = useState<Post[]>([])
   async function loadFeed() {
     setLoading(true);
 
-    // 1️⃣ Buscar usuário logado
     const {
       data: { user },
       error: userError
@@ -63,7 +62,6 @@ const [posts, setPosts] = useState<Post[]>([])
 
     const userId = user.id;
 
-    // 2️⃣ Buscar comunidades que ele participa
     const { data: userCommunities, error: commError } = await supabase
       .from("comunidades_usuarios")
       .select("comunidade_id")
@@ -77,7 +75,6 @@ const [posts, setPosts] = useState<Post[]>([])
 
     const communityIds = userCommunities.map(c => c.comunidade_id);
 
-    // 3️⃣ Buscar posts dessas comunidades
 const {  data, error: postsError } = await supabase
   .from("postagens")
   .select(`
@@ -94,7 +91,6 @@ if (postsError) {
   console.log(postsError);
   setPosts([]);
 } else {
-  // mapear postagem_id para id
   const postsMapped = data.map((p: any) => ({
     id: p.postagem_id,
     usuario_id: p.usuario_id,
@@ -125,7 +121,6 @@ async function loadCommunities() {
     return;
   }
 
-  // Step 1: Get community IDs the user belongs to
   const { data: membershipData, error: membershipError } = await supabase
     .from("comunidades_usuarios")
     .select("comunidade_id")
@@ -139,7 +134,6 @@ async function loadCommunities() {
 
   const communityIds = membershipData.map(m => m.comunidade_id);
 
-  // Step 2: Fetch full community details
   const { data: communitiesData, error: communitiesError } = await supabase
     .from("comunidades")
     .select("comunidade_id, comunidade_nome")
@@ -149,7 +143,7 @@ async function loadCommunities() {
     console.error("Erro ao carregar detalhes das comunidades:", communitiesError);
     setCommunities([]);
   } else {
-    setCommunities(communitiesData as Comunidade[]); // Safe cast since shape matches
+    setCommunities(communitiesData as Comunidade[]); 
     setSelectedComm(communitiesData.length > 0 ? communitiesData[0].comunidade_id : null);
   }
 
@@ -227,7 +221,7 @@ comunidade={item.comunidades?.comunidade_nome || "Comunidade"}  />
         />
       )}
   <Pressable         onPress={() => setShowPopup(true)}>
-      <NewPostButton />
+  {!loading && !refreshing ? <NewPostButton /> : null}
       </Pressable>
 <Popup visible={showPopup} onClose={() => setShowPopup(false)}>
   <View style={{ gap: 20 }}>

@@ -4,7 +4,7 @@
     "slug": "hysh-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-transp-roxa.png",
+    "icon": "./assets/images/logo hysh.png",
     "scheme": "hyshapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,7 +14,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo hysh.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -44,7 +44,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "09654d66-665e-4bdc-b2a4-889012524801"
+        "projectId": "2a6ce05c-c31a-4a9e-9e91-d2e6f07406d7"
       }
     }
   }

@@ -152,7 +152,6 @@ function getTime(timestamp: string) {
       <CommunityBadge comunidade={comunidade}/>
       <Text style={styles.content}>{content}</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10, gap: 20, marginRight: likesCount>0?0:10}}>
-        <FontAwesome6 name="repeat" size={20} color="#5C39BE" iconStyle='solid'/>
         <Pressable style={{ flexDirection: "row", alignItems: "center"}}>
         <FontAwesome6 name="message" size={20} color="#5C39BE" 
 onPress={() => router.push({

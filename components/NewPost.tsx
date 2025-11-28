@@ -49,7 +49,7 @@ export default function NewPost({ comunidadeId, onPostCreated }: NewPostProps) {
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Escreva algo..."
+        placeholder="Escreva algo..." placeholderTextColor={"grey"}
         value={content}
         onChangeText={setContent}
         style={styles.input}

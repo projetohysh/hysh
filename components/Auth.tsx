@@ -1,5 +1,6 @@
-import { useRouter } from 'expo-router'
-import React, { useState } from 'react'
+import { savePushToken } from "@/utils/pushNotifications";
+import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -9,8 +10,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from 'react-native'
-import { supabase } from '../lib/supabase'
+} from 'react-native';
+import { supabase } from '../lib/supabase';
 
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {
@@ -40,6 +41,7 @@ export default function Auth() {
     if (error) {
       Alert.alert("Email ou senha incorretos!", "Por favor, verifique novamente suas credenciais.")
     } else {
+      await savePushToken(); 
       router.replace('/(tabs)')
     }
   }
@@ -68,6 +70,8 @@ export default function Auth() {
     if (!session) {
       Alert.alert('Verifique seu e-mail para confirmar o cadastro!')
     }
+    await savePushToken();
+  router.replace('/(tabs)')
   }
 
   return (

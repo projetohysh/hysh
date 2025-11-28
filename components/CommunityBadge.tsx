@@ -18,7 +18,7 @@ export default function CommunityBadge({comunidade}: CommunityBadgeProps){
 
 const styles = StyleSheet.create({
     badge: {
-backgroundColor: '#cbcbcb67',
+backgroundColor: '#cbcbcb86',
     flexDirection: 'row',
     paddingHorizontal: 8,
     paddingVertical: 4,
