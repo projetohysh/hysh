@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "926909037692",
+    "project_id": "hysh-b7430",
+    "storage_bucket": "hysh-b7430.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926909037692:android:093d800250e52411ac5df9",
+        "android_client_info": {
+          "package_name": "com.anonymous.hyshapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi2fEmlSf87BrURKT7ouH87R9CSNK7BT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

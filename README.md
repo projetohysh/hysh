@@ -1,6 +1,7 @@
 # 🟪 Hysh
 # Projeto em React Native + Expo
 
+APK Download: https://drive.google.com/file/d/1fm1IR9dpRRZfmRPYnxeC0seEqLKMZBzn/view?usp=sharing
 
 # ⚙️ Requisitos
 
