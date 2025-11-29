@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "hysh-app",
+    "name": "Hysh",
     "slug": "hysh-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo hysh.png",
+    "icon": "./assets/images/logo-hysh.png",
     "scheme": "hyshapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,11 +14,15 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo hysh.png",
-        "backgroundColor": "#ffffff"
-      },
+      "backgroundColor": "#ffffff",
+      "foregroundImage": "./assets/images/logo-hysh.png",
+      "backgroundImage": "./assets/images/logo-hysh.png",
+      "monochromeImage": "./assets/images/logo-hysh.png"
+        },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.hyshapp"
+      "package": "com.anonymous.hyshapp",
+      "googleServicesFile": "./google-services.json"
+
     },
     "web": {
       "bundler": "metro",

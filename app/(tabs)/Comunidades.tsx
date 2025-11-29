@@ -12,11 +12,12 @@ import {
   Modal,
   Platform,
   Pressable,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -31,6 +32,7 @@ export default function Comunidades() {
   const [communities, setCommunities] = useState<Community[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [refreshing, setRefreshing] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [newName, setNewName] = useState("");
@@ -40,6 +42,17 @@ export default function Comunidades() {
 
   const [recomendacoes, setRecomendacoes] = useState<Community[]>([]);
   const [loadingRecomendacoes, setLoadingRecomendacoes] = useState(true);
+const onRefresh = async () => {
+  setRefreshing(true);
+  try {
+    await loadUserCommunities();
+    await loadRecomendacoes();
+  } catch (err) {
+    console.log("Erro ao atualizar:", err);
+  } finally {
+    setRefreshing(false);
+  }
+};
 
   useEffect(() => {
     loadUserCommunities();
@@ -76,41 +89,75 @@ export default function Comunidades() {
     setLoading(false);
   }
 
-  async function loadRecomendacoes() {
-    setLoadingRecomendacoes(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { setRecomendacoes([]); setLoadingRecomendacoes(false); return; }
+async function loadRecomendacoes() {
+  setLoadingRecomendacoes(true);
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) { setRecomendacoes([]); setLoadingRecomendacoes(false); return; }
 
-    const { data: recData } = await supabase
-      .from("recomendacoes_comunidades")
-      .select("comunidade1, comunidade2, comunidade3")
-      .eq("usuario_id", user.id)
-      .maybeSingle();
+  // Tenta pegar recomendações personalizadas
+  const { data: recData, error: recError } = await supabase
+    .from("recomendacoes_comunidades")
+    .select("comunidade1, comunidade2, comunidade3")
+    .eq("usuario_id", user.id)
+    .limit(1)
+    .single();
 
-    if (!recData) { setRecomendacoes([]); setLoadingRecomendacoes(false); return; }
-
-    const ids = [recData.comunidade1, recData.comunidade2, recData.comunidade3]
+  let ids: string[] = [];
+  
+  if (!recError && recData) {
+    ids = [recData.comunidade1, recData.comunidade2, recData.comunidade3]
       .filter(Boolean)
-      .map(Number);
+      .map(String);
+  }
 
-    if (!ids.length) { setRecomendacoes([]); setLoadingRecomendacoes(false); return; }
-
+  if (ids.length > 0) {
     const { data: comunidadesData, error } = await supabase
       .from("comunidades")
       .select("comunidade_id, comunidade_nome, comunidade_descricao, comunidade_foto_url")
       .in("comunidade_id", ids);
 
-    if (error) { setRecomendacoes([]); setLoadingRecomendacoes(false); return; }
-
-    setRecomendacoes(comunidadesData.map(c => ({
-      id: String(c.comunidade_id),
-      comunidade_nome: c.comunidade_nome,
-      comunidade_descricao: c.comunidade_descricao ?? null,
-      comunidade_foto_url: c.comunidade_foto_url ?? null,
-    })));
-
-    setLoadingRecomendacoes(false);
+    if (comunidadesData && comunidadesData.length) {
+      setRecomendacoes(comunidadesData.map((c: any) => ({
+        id: String(c.comunidade_id),
+        comunidade_nome: c.comunidade_nome,
+        comunidade_descricao: c.comunidade_descricao ?? null,
+        comunidade_foto_url: c.comunidade_foto_url ?? null,
+      })));
+      setLoadingRecomendacoes(false);
+      return;
+    }
   }
+
+  // Se não houver recomendações, pegar top 5 comunidades com mais membros via query SQL
+  const { data: topComs, error: topError } = await supabase
+    .from("comunidades")
+    .select(`
+      comunidade_id,
+      comunidade_nome,
+      comunidade_descricao,
+      comunidade_foto_url,
+      total_membros:comunidades_usuarios!inner(usuario_id)
+    `, { count: "exact" })
+    .order("total_membros", { ascending: false })
+    .limit(5);
+
+  if (!topComs || topError) {
+    setRecomendacoes([]);
+    setLoadingRecomendacoes(false);
+    return;
+  }
+
+  setRecomendacoes(topComs.map((c: any) => ({
+    id: String(c.comunidade_id),
+    comunidade_nome: c.comunidade_nome,
+    comunidade_descricao: c.comunidade_descricao ?? null,
+    comunidade_foto_url: c.comunidade_foto_url ?? null,
+  })));
+
+  setLoadingRecomendacoes(false);
+}
+
+
 
   async function entrarNaComunidade(comunidadeId: string | number) {
     try {
@@ -206,7 +253,6 @@ if (imageUri) {
     .eq("comunidade_id", newCommunity.comunidade_id);
 }
 
-// Inserir na tabela de relação corretamente
 const { data: linkData, error: linkError } = await supabase
   .from("comunidades_usuarios")
   .insert([{ usuario_id: user.id, comunidade_id: newCommunity.comunidade_id }]);
@@ -240,7 +286,14 @@ setCommunities(prev => [
   return (
     <SafeAreaView style={styles.container}>
       <Header headerTitle="Comunidades" font="Poppins" />
-      <ScrollView>
+      <ScrollView   refreshControl={
+    <RefreshControl
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      colors={["#5C39BE"]}
+      tintColor="#5C39BE"
+    />
+  }>
         <ScrollView horizontal>
           {loading ? (
             <ActivityIndicator style={{ marginTop: 30 }} size="large" color="#5C39BE" />
@@ -295,23 +348,11 @@ setCommunities(prev => [
                 <Image
                   source={item.comunidade_foto_url
                     ? { uri: item.comunidade_foto_url }
-                    : require("@/assets/images/logo hysh.png")}
+                    : require("@/assets/images/logo-hysh.png")}
                   style={{ width: 60, height: 60, borderRadius: 12 }}
                 />
                 <View style={{ marginLeft: 15, flex: 1, flexDirection: "row", alignItems: "center", justifyContent:"space-between" }}>
                   <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item.comunidade_nome}</Text>
-                  <Pressable
-                    onPress={async () => await entrarNaComunidade(item.id)}
-                    style={{
-                      marginTop: 6,
-                      paddingVertical: 6,
-                      paddingHorizontal: 12,
-                      backgroundColor: "#5C39BE",
-                      borderRadius: 8,
-                    }}
-                  >
-                    <Text style={{ color: "white", fontSize: 13 }}>Participar</Text>
-                  </Pressable>
                 </View>
               </Pressable>
             ))}

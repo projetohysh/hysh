@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 export default function NotificationCard({tipo, content} : {tipo : string, content: string} ){
     return(
         <View style={styles.container}>
-<Image source={require('../assets/images/logo hysh.png')} style={{ width: 50, height: 50, }} />
+<Image source={require('../assets/images/logo-hysh.png')} style={{ width: 50, height: 50, borderRadius:50}} />
             <View style={{alignItems: 'flex-start'}}>
         <Text>{tipo}</Text>
         <Text style={{color: 'grey'}}>{content}</Text>

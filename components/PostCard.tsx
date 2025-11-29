@@ -2,9 +2,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { supabase } from "../lib/supabase";
 import CommunityBadge from './CommunityBadge';
+
 
 export interface PostCardProps {
   id: string;
@@ -134,11 +135,64 @@ function getTime(timestamp: string) {
     return postDate.toLocaleDateString();
   }
 }
+function handleOptions() {
+  if (user && user.id === userId) {
+    Alert.alert(
+      "Opções do post",
+      "Escolha uma ação",
+      [
+        {
+          text: "Apagar post",
+          style: "destructive",
+          onPress: deletePost
+        },
+        {
+          text: "Cancelar",
+          style: "cancel"
+        }
+      ]
+    );
+  }
+}
+
+async function deletePost() {
+  try {
+    // Deletar comentários
+    const { error: errComentarios } = await supabase
+      .from("comentarios")
+      .delete()
+      .eq("postagem_id", Number(id));
+    if (errComentarios) throw errComentarios;
+
+    // Deletar curtidas
+    const { error: errCurtidas } = await supabase
+      .from("curtidas_post")
+      .delete()
+      .eq("postagem_id", Number(id));
+    if (errCurtidas) throw errCurtidas;
+
+    // Agora apagar o post
+    const { error } = await supabase
+      .from("postagens")
+      .delete()
+      .eq("postagem_id", Number(id));
+
+    if (error) throw error;
+
+    Alert.alert("Post apagado", "Seu post foi removido com sucesso.");
+  } catch (err) {
+    console.log("Erro ao deletar post:", err);
+    Alert.alert("Erro", "Não foi possível deletar o post.");
+  }
+}
+
 
 
   return (
     <View style={styles.card}>
-       <FontAwesome6 name="ellipsis" size={20} color="gray" style={{alignSelf: 'flex-end'}}/>
+<Pressable onPress={handleOptions}>
+  <FontAwesome6 name="ellipsis" size={20} color="gray" style={{ alignSelf: 'flex-end' }}/>
+</Pressable>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
   <Pressable onPress={() => router.push(`/(profile)/${userId}`)}style={{marginRight:10}}>
     <Image 
@@ -146,8 +200,8 @@ function getTime(timestamp: string) {
       style={{ width: 50, height: 50, borderRadius: 25 }} // 
     />
   </Pressable>
-        <Text style={styles.postOwner}>{postOwner}</Text>
-        <Text style={styles.postDetails}>{username} • {getTime(postTime)}</Text>
+        <Text style={styles.postOwner}>{postOwner.substring(0,15)}</Text>
+        <Text style={styles.postDetails}>{postOwner.substring(0,6)} • {getTime(postTime)}</Text>
       </View>
       <CommunityBadge comunidade={comunidade}/>
       <Text style={styles.content}>{content}</Text>

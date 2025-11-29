@@ -181,47 +181,43 @@ async function loadCurrentUser() {
 
       <Header headerTitle="Hysh"/>
 
-      {loading ? (
-        <Text style={{ textAlign: 'center', marginTop: 20 }}>
-        <FontAwesome6 name="spinner" size={20} color="#5C39BE" iconStyle='solid'/>
-        </Text>
-      ) : posts.length === 0 ? (
-        <View style={{ marginTop: 30, padding: 20 }}>
-          <Text style={{ fontSize: 18, textAlign: 'center', color: '#333' }}>
-            👋 Bem-vindo ao Hysh!
-          </Text>
-          <Text style={{ marginTop: 10, textAlign: 'center', color: '#666' }}>
-            Participe de comunidades para ver postagens no seu feed.
-          </Text>
-        </View>
-      ) : (
-        <FlatList
-          data={posts}
-          keyExtractor={(item) => item.id}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              colors={['#5C39BE']}
-              tintColor="#5C39BE"
-            />
-          }
-          renderItem={({ item }) => (
-  <PostCard
-    id={item.id}
-    userId={item.usuario_id}
-    postOwner={item.usuarios?.usuario_nome || "Usuário Hysh"}
-    profPic={item.usuarios?.usuario_foto_url}
-    content={item.postagem_conteudo}
-    username="@usuario"
-    postTime={item.postagem_criado_em}
-comunidade={item.comunidades?.comunidade_nome || "Comunidade"}  />
-)}
+<FlatList
+  data={posts}
+  keyExtractor={(item) => item.id}
+  refreshControl={
+    <RefreshControl
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      colors={['#5C39BE']}
+      tintColor="#5C39BE"
+    />
+  }
+  renderItem={({ item }) => (
+    <PostCard
+      id={item.id}
+      userId={item.usuario_id}
+      postOwner={item.usuarios?.usuario_nome || "Usuário Hysh"}
+      profPic={item.usuarios?.usuario_foto_url}
+      content={item.postagem_conteudo}
+      username="@usuario"
+      postTime={item.postagem_criado_em}
+      comunidade={item.comunidades?.comunidade_nome || "Comunidade"}
+    />
+  )}
+  ListEmptyComponent={() => (
+    <View style={{ marginTop: 50, padding: 20 }}>
+      <Text style={{ fontSize: 18, textAlign: 'center', color: '#333' }}>
+        👋 Bem-vindo ao Hysh!
+      </Text>
+      <Text style={{ marginTop: 10, textAlign: 'center', color: '#666' }}>
+        Participe de comunidades para ver postagens no seu feed.
+      </Text>
+    </View>
+  )}
+/>
 
-        />
-      )}
   <Pressable         onPress={() => setShowPopup(true)}>
-  {!loading && !refreshing ? <NewPostButton /> : null}
+  {!loading && !refreshing && posts.length !== 0 ? <NewPostButton /> : null}
       </Pressable>
 <Popup visible={showPopup} onClose={() => setShowPopup(false)}>
   <View style={{ gap: 20 }}>

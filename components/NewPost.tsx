@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     fontSize: 16,
-    minHeight: 60,
+    minHeight: 100,
     textAlignVertical: "top",
   },
   button: {

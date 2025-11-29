@@ -2,7 +2,7 @@ import Header from '@/components/Header';
 import NotificationCard from '@/components/NotificationCard';
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Notificacao = {
@@ -18,6 +18,18 @@ type Notificacao = {
 export default function Notificacoes() {
   const [notificacoes, setNotificacoes] = useState<Notificacao[]>([]);
   const [loading, setLoading] = useState(true);
+const [refreshing, setRefreshing] = useState(false);
+
+const onRefresh = async () => {
+  setRefreshing(true);
+  try {
+    await loadNotificacoes();
+  } catch (err) {
+    console.log("Erro ao atualizar notificações:", err);
+  } finally {
+    setRefreshing(false);
+  }
+};
 
   useEffect(() => {
     let channel: any = null;
@@ -71,7 +83,9 @@ const { data, error } = await supabase
     )
   `)
   .eq('usuario_id', userId)
-  .order('notificacao_criado_em', { ascending: false });
+  .order('notificacao_criado_em', { ascending: false })
+  .limit(10);
+
 
 
 
@@ -106,14 +120,35 @@ const { data, error } = await supabase
           <Text style={{ color: '#7c7c7c', fontSize: 16 }}>Nenhuma notificação ainda.</Text>
         </View>
       ) : (
-        <ScrollView style={{ paddingHorizontal: 10 }}>
-          {notificacoes.map((n) => (
-            <NotificationCard 
-              key={n.notificacao_id}
-              tipo={n.notificacao_tipo}
-              content={`Enviado em: ${new Date(n.notificacao_criado_em).toLocaleString()}`}
-            />
-          ))}
+        <ScrollView style={{ paddingHorizontal: 10 }}   refreshControl={
+    <RefreshControl
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      colors={['#5C39BE']} 
+      tintColor="#5C39BE" 
+    />
+  }>
+{notificacoes.map((n) => {
+  const dateBR = new Date(n.notificacao_criado_em + "Z");
+
+  const formatted = dateBR.toLocaleString("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+
+  return (
+    <NotificationCard
+      key={n.notificacao_id}
+      tipo={n.notificacao_tipo}
+      content={`Enviado em: ${formatted}`}
+    />
+  );
+})}
+
         </ScrollView>
       )}
     </SafeAreaView>
