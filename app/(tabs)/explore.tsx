@@ -96,7 +96,7 @@ export default function Explore() {
               <TouchableOpacity
                 key={u.id}
                 style={styles.item}
-                onPress={() => router.push(`/${u.id}`)}
+                onPress={() => router.push(`/(profile)/${u.id}`)}
               >
                 <Image
                   source={{ uri: u.usuario_foto_url || 'https://via.placeholder.com/50' }}

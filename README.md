@@ -1,7 +1,8 @@
 # 🟪 Hysh
 # Projeto em React Native + Expo
 
-APK Download: https://expo.dev/artifacts/eas/qF658q64zUmMsjh1WUtUjr.apk
+APK Download: https://expo.dev/artifacts/eas/3RDTsspZsyUb9ZNG1w3zJW.apk
+
 
 
 # ⚙️ Requisitos
