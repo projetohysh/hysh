@@ -3,6 +3,8 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert, Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import Autolink from "react-native-autolink";
+import LinkPreview from "react-native-link-preview";
 import { supabase } from "../lib/supabase";
 import CommunityBadge from './CommunityBadge';
 
@@ -53,6 +55,22 @@ async function loadLikes() {
   setLiked(!!userLike);
 }
 
+const extractUrl = (text: string) => {
+  const regex = /(https?:\/\/[^\s]+)/g;
+  const match = text.match(regex);
+  return match ? match[0] : null;
+};
+
+const link = extractUrl(content);
+const [preview, setPreview] = useState<any>(null);
+
+useEffect(() => {
+  if (link) {
+    LinkPreview.getPreview(link)
+.then((data: any) => setPreview(data))
+      .catch(() => {});
+  }
+}, [link]);
 
 
 async function toggleLike() {
@@ -204,7 +222,45 @@ async function deletePost() {
         <Text style={styles.postDetails}>{postOwner.substring(0,6)} • {getTime(postTime)}</Text>
       </View>
       <CommunityBadge comunidade={comunidade}/>
-      <Text style={styles.content}>{content}</Text>
+<Autolink
+  text={content}
+  style={styles.content}
+  linkStyle={{ color: "#5C39BE", textDecorationLine: "underline" }}
+/>
+{preview && (
+  <View style={{
+    backgroundColor: "#f2f2f2",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10
+  }}>
+    {preview.images?.[0] && (
+      <Image
+        source={{ uri: preview.images[0] }}
+        style={{ width: "100%", height: 180, borderRadius: 10 }}
+        resizeMode="cover"
+      />
+    )}
+
+    {preview.title && (
+      <Text style={{ fontWeight: "bold", marginTop: 8 }}>
+        {preview.title}
+      </Text>
+    )}
+
+    {preview.description && (
+      <Text style={{ marginTop: 4, opacity: 0.7 }}>
+        {preview.description}
+      </Text>
+    )}
+
+    <Text style={{ marginTop: 6, color: "blue" }}>
+      {preview.url}
+    </Text>
+  </View>
+)}
+
+
       <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10, gap: 20, marginRight: likesCount>0?0:10}}>
         <Pressable style={{ flexDirection: "row", alignItems: "center"}}>
         <FontAwesome6 name="message" size={20} color="#5C39BE" 

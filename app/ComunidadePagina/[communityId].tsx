@@ -2,7 +2,8 @@ import Header from "@/components/Header";
 import NewPost from "@/components/NewPost";
 import PostCard from "@/components/PostCard";
 import { supabase } from "@/lib/supabase";
-import { useLocalSearchParams } from "expo-router";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -15,6 +16,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 
 type Usuario = {
   usuario_nome: string;
@@ -117,6 +119,7 @@ useEffect(() => {
 
     setLoading(false);
   }
+const router = useRouter();
 
   async function loadMembers() {
   if (!communityId) return;
@@ -316,13 +319,34 @@ const parsed = data
               </Text>
             )}
 <View style={{flexDirection: "row", flex:1, gap:10}}>
+{isMember && (
+  <Pressable
+    onPress={() => router.push(`/(chats)/${community.id}`)}
+    style={{
+      backgroundColor: "#5C39BE",
+      padding: 10,
+      borderRadius: 8,
+      marginBottom: 15,
+      alignItems: "center",
+      paddingHorizontal:20
+    }}
+  >
+    <FontAwesome6
+      name={"comment-dots"}
+      size={22}
+      color={"white"}
+    />
+  </Pressable>
+)}
+
+
 <Pressable
   onPress={() => {
     loadMembers();
     setMembersModalVisible(true);
   }}
   style={{
-    backgroundColor: "#6841d3ff",
+    backgroundColor: "#5C39BE",
     padding: 10,
     borderRadius: 8,
     marginBottom: 15,
@@ -330,7 +354,7 @@ const parsed = data
     flex:1
   }}
 >
-  <Text style={{ color: "#fff", fontWeight: "bold" }}>Ver membros</Text>
+  <Text style={{ color: "#fff", fontWeight: "bold", alignSelf:'center'}}>Ver membros</Text>
 </Pressable>
 
             {/* Botão entrar/sair */}
@@ -350,9 +374,10 @@ const parsed = data
                   style={{
                     color: isMember ? "#333" : "#fff",
                     fontWeight: "bold",
+                    alignSelf:'center'
                   }}
                 >
-                  {isMember ? "Sair da comunidade" : "Entrar na comunidade"}
+                  {isMember ? "Sair" : "Entrar na comunidade"}
                 </Text>
               </Pressable>
             )}

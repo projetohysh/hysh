@@ -1,6 +1,8 @@
 import { useColorScheme } from '@/hooks/useColorScheme';
+import "@/utils/notificationHandler";
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Session } from '@supabase/supabase-js';
+import * as Notifications from "expo-notifications";
 import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
@@ -30,6 +32,13 @@ export default function RootLayout() {
 
     init();
   }, []);
+useEffect(() => {
+  const sub = Notifications.addNotificationReceivedListener((notification) => {
+    const body = notification.request?.content?.body ?? "Você recebeu uma notificação!";
+  });
+
+  return () => sub.remove();
+}, []);
 
   useEffect(() => {
     if (!isReady) return;
